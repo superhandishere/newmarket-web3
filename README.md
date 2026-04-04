@@ -1,73 +1,73 @@
-# ⚽ GlobalCup 2026 - Web3 预测市场交易终端
+# ⚽ GlobalCup 2026 - Web3 Prediction Market Trading Terminal
 
-> GlobalCup 2026 是一个基于 **BSC (Binance Smart Chain)** 构建的去中心化预测市场 DApp。项目采用 **账户抽象 (ERC-4337) 免 Gas 技术**，结合 **AMM 份额交易模型 (Shares AMM)** 与 **DAO 多签裁决机制**，为用户提供丝滑、专业的 Web3 体育赛事预测和交易体验。
-
----
-
-## 🌟 一、 功能说明 (Features)
-
-### 1. ERC-4337 免 Gas 交易 (Gasless Trading)
-- 集成 **AppKit**、**Viem** 与 **Permissionless.js**，通过 Pimlico Paymaster 赞助 Gas 费。
-- 自动为用户创建 Safe 智能账户，一键完成 `Approve` 和 `Bet` 的批量交易上链，极大降低 Web3 门槛。
-
-### 2. AMM 份额双向交易 (Share-based AMM & Cash Out)
-- 摒弃传统固定赔率，采用动态资金池算法。
-- 支持 **买入 (Buy)** 和 **卖出 (Sell/Cash out)**。用户可随时根据实时赔率提前平仓，锁定利润或止损。
-
-### 3. 实时行情推送 (Real-time Odds)
-- 结合 MongoDB `O(1)` 原子更新与 WebSocket (`Socket.io`) 毫秒级全网广播。
-- 任何用户的下注均会瞬间引起全网赔率和图表的动态热刷新。
-
-### 4. 全方位资产组合 (Portfolio & Favorites)
-- 提供直观的"资产组合"面板，实时展示持有份额的 **当前市值 (Current Value)** 与 **未实现盈亏 (Unrealized PnL)**。
-- 支持赛事一键收藏 (Favorites) 与跨面板状态联动。
-
-### 5. DAO 多签安全裁决 (DAO Multi-sig Resolution)
-- 独立的 `admin.html` 裁决控制台。基于 Web3 钱包 Nonce 签名认证。
-- 赛事结束后，需两名 DAO 成员投票一致，后端机器人自动将结果上链，触发资金池结算，杜绝单点作恶。
-
-### 6. 智能多语言 (i18n Auto-detection)
-- 通过 IP Geolocation 与 Browser Headers 自动识别用户所属地。
-- 原生支持 English、中文 (zh)、ລາ​ວ (老挝语 lo)，支持 UI 与底层数据的无缝热切换。
+> GlobalCup 2026 is a decentralized prediction market DApp built on **BSC (Binance Smart Chain)**. The project leverages **Account Abstraction (ERC-4337) gasless technology**, combining **AMM share trading (Shares AMM)** with **DAO multi-signature resolution**, providing users with a seamless and professional Web3 sports prediction and trading experience.
 
 ---
 
-## 🔌 二、 技术接口一览 (API Overview)
+## 🌟 Features
 
-系统后端基于 **Node.js (Express) + MongoDB** 构建。
+### 1. ERC-4337 Gasless Trading
+- Integrated **AppKit**, **Viem**, and **Permissionless.js**, with Pimlico Paymaster sponsoring gas fees.
+- Automatically creates Safe smart accounts for users, executing batch transactions like `Approve` + `Bet` in one click, greatly lowering the Web3 barrier.
 
-### 1. 公共数据接口 (Public API)
-| 接口路径 | 方法 | 功能描述 |
-| :--- | :--- | :--- |
-| `/api/events` | `GET` | 获取所有存储在数据库中的赛事基础信息。 |
-| `/api/win-rates` | `GET` | 获取当前所有赛事的实时资金池总额及动态胜率（赔率）。 |
-| `/api/trades/:id` | `GET` | 获取指定赛事 (eventId) 的所有历史成交记录。 |
-| `/api/locale` | `GET` | 回退语言检测接口，通过解析请求头 `Accept-Language` 返回推荐语言。 |
+### 2. AMM Share-based Bidirectional Trading (Share-based AMM & Cash Out)
+- Abandoning traditional fixed odds, adopting dynamic liquidity pool algorithms.
+- Supports **Buy** and **Sell/Cash Out**. Users can close positions early at any time based on real-time odds to lock in profits or cut losses.
 
-### 2. 交易与用户接口 (Trading & User API)
-| 接口路径 | 方法 | 功能描述 |
-| :--- | :--- | :--- |
-| `/api/save-order` | `POST` | 接收前端下注/平仓数据，原子化更新 (`$inc`) 资金池，并触发 WS 广播。 |
-| `/api/user-portfolio` | `GET` | 传入 `address`，返回该智能账户的完整下注历史、持仓市值及总盈亏。 |
-| `/api/user-payouts` | `GET` | 传入 `address`，返回该账户已中奖且可提取收益的订单列表。 |
-| `/api/pimlico/56` | `POST` | 代理转发 Bundler/Paymaster 请求，隐藏 API Key。 |
+### 3. Real-time Odds Push (Real-time Odds)
+- Combining MongoDB `O(1)` atomic updates with WebSocket (`Socket.io`) millisecond-level broadcast.
+- Any user's bet will instantly trigger dynamic hot-refresh of odds and charts across the entire network.
 
-### 3. DAO 管理员接口 (Admin API)
-> **注意：** 以下接口均需通过 `verifyDaoAuth` 中间件，校验 Header 中的 `x-wallet-address`, `x-signature`, `x-nonce`, `x-timestamp`。
+### 4. Comprehensive Portfolio & Favorites
+- Intuitive "Portfolio" panel showing real-time **Current Value** and **Unrealized PnL** of held shares.
+- Supports one-click event favorites and cross-panel state linkage.
 
-| 接口路径 | 方法 | 功能描述 |
-| :--- | :--- | :--- |
-| `/api/admin/auth-nonce` | `GET` | 登录前置接口，生成防重放的一次性签名消息 (Nonce)。 |
-| `/api/admin/resolve-event`| `POST` | 提交裁决投票。当两票一致时，后端自动调用智能合约 `resolveEvent` 结算上链。 |
-| `/api/admin/dao-members` | `GET` | 获取当前白名单中的所有 DAO 成员列表。 |
-| `/api/admin/dao-members` | `POST` | 添加新的 DAO 成员 BSC 钱包地址。 |
-| `/api/admin/dao-members/:address`| `DELETE`| 移除指定的 DAO 成员权限（禁止移除超级管理员和自身）。 |
+### 5. DAO Multi-signature Secure Resolution (DAO Multi-sig Resolution)
+- Independent `admin.html` resolution console. Based on Web3 wallet Nonce signature authentication.
+- After an event ends, two DAO members must vote consistently, and the backend bot automatically onboards the result to the chain, triggering fund pool settlement, preventing single-point malicious behavior.
+
+### 6. Smart Multi-language (i18n Auto-detection)
+- Automatically identifies user location via IP Geolocation and Browser Headers.
+- Native support for English, 中文 (zh), ລາ​ວ (Lao lo), with seamless hot-switching for both UI and underlying data.
 
 ---
 
-## 🔄 三、 工作流流程图 (Workflow)
+## 🔌 API Overview
 
-### 1. 核心交易与实时盘口更新流 (User Trading Flow)
+Backend built on **Node.js (Express) + MongoDB**.
+
+### 1. Public API
+| Endpoint | Method | Description |
+| :--- | :--- | :--- |
+| `/api/events` | `GET` | Get all event basic info stored in the database. |
+| `/api/win-rates` | `GET` | Get current total liquidity pool and dynamic win rates (odds) for all events. |
+| `/api/trades/:id` | `GET` | Get all historical trade records for a specified event (eventId). |
+| `/api/locale` | `GET` | Fallback language detection - returns recommended language by parsing `Accept-Language` header. |
+
+### 2. Trading & User API
+| Endpoint | Method | Description |
+| :--- | :--- | :--- |
+| `/api/save-order` | `POST` | Receive bet/close data from frontend, atomically update (`$inc`) liquidity pool, trigger WS broadcast. |
+| `/api/user-portfolio` | `GET` | Pass `address` to return complete bet history, position market value, and total PnL for that smart account. |
+| `/api/user-payouts` | `GET` | Pass `address` to return list of winning orders that can be withdrawn. |
+| `/api/pimlico/56` | `POST` | Proxy forwarding Bundler/Paymaster requests, hiding API Key. |
+
+### 3. DAO Admin API
+> **Note:** All endpoints below require `verifyDaoAuth` middleware, verifying `x-wallet-address`, `x-signature`, `x-nonce`, `x-timestamp` in headers.
+
+| Endpoint | Method | Description |
+| :--- | :--- | :--- |
+| `/api/admin/auth-nonce` | `GET` | Pre-login endpoint generating replay-protected one-time signature message (Nonce). |
+| `/api/admin/resolve-event`| `POST` | Submit resolution vote. When two votes match, backend automatically calls smart contract `resolveEvent` for on-chain settlement. |
+| `/api/admin/dao-members` | `GET` | Get all DAO members in current whitelist. |
+| `/api/admin/dao-members` | `POST` | Add new DAO member BSC wallet address. |
+| `/api/admin/dao-members/:address`| `DELETE`| Remove specified DAO member permission (super admin and self cannot be removed). |
+
+---
+
+## 🔄 Workflow Diagrams
+
+### 1. Core Trading & Real-time Odds Update Flow (User Trading Flow)
 
 ```mermaid
 sequenceDiagram
@@ -78,17 +78,17 @@ sequenceDiagram
     participant Backend as Backend(Node+Mongo)
     participant All_Clients
     
-    User->>Frontend: 选择买入/卖出，点击确认
-    Frontend->>Bundler: 构造 UserOperation (打包 Approve + Bet)
-    Bundler->>BSC_Contract: 代付 Gas 并将交易上链执行
-    BSC_Contract-->>Frontend: 返回 txHash
-    Frontend->>Backend: POST /api/save-order 上报订单
-    Backend->>Backend: MongoDB $inc O(1) 原子更新资金池
-    Backend->>All_Clients: WebSocket 广播最新赔率 (odds_updated)
-    All_Clients->>All_Clients: UI 热重载：图表跳动、面板赔率更新
+    User->>Frontend: Select Buy/Sell, click confirm
+    Frontend->>Bundler: Construct UserOperation (bundle Approve + Bet)
+    Bundler->>BSC_Contract: Sponsor gas and execute transaction on chain
+    BSC_Contract-->>Frontend: Return txHash
+    Frontend->>Backend: POST /api/save-order report order
+    Backend->>Backend: MongoDB $inc O(1) atomic update liquidity pool
+    Backend->>All_Clients: WebSocket broadcast latest odds (odds_updated)
+    All_Clients->>All_Clients: UI hot-reload: charts jump, panel odds update
 ```
 
-### 2. DAO 多签裁决与自动清算流 (DAO Resolution Flow)
+### 2. DAO Multi-signature Resolution & Auto Settlement Flow (DAO Resolution Flow)
 
 ```mermaid
 sequenceDiagram
@@ -98,41 +98,41 @@ sequenceDiagram
     participant BSC_Contract
     participant Users
     
-    DAO_Admin->>Admin_UI: 赛后3小时，登录 admin.html
-    Admin_UI->>Backend(Nodejs): 请求 Auth-Nonce 并签名登录
-    DAO_Admin->>Admin_UI: 针对比赛提交赛果 (如: HOME 胜)
+    DAO_Admin->>Admin_UI: 3 hours after match, login to admin.html
+    Admin_UI->>Backend(Nodejs): Request Auth-Nonce and sign in
+    DAO_Admin->>Admin_UI: Submit match result (e.g., HOME wins)
     Admin_UI->>Backend(Nodejs): POST /api/admin/resolve-event
-    Backend(Nodejs)->>Backend(Nodejs): 记录投票。检查是否达到 2 票共识
-    alt 达成共识 (2票一致)
-        Backend(Nodejs)->>BSC_Contract: Node.js机器钱包发起交易 resolveEvent()
-        BSC_Contract-->>Backend(Nodejs): 链上资金池进入 Settlement 状态
-        Backend(Nodejs)->>Users: 状态更新，前端资产组合亮起"提现"按钮
-        Users->>BSC_Contract: 点击"提现"，合约按比例打入 USDC 奖金
-    else 未达成共识
-        Backend(Nodejs)-->>Admin_UI: 记录成功，等待另一名管理员确认
+    Backend(Nodejs)->>Backend(Nodejs): Record vote. Check if 2-vote consensus reached
+    alt Consensus Reached (2 matching votes)
+        Backend(Nodejs)->>BSC_Contract: Node.js machine wallet initiates resolveEvent() transaction
+        BSC_Contract-->>Backend(Nodejs): On-chain fund pool enters Settlement state
+        Backend(Nodejs)->>Users: Status update, frontend portfolio shows "Withdraw" button
+        Users->>BSC_Contract: Click "Withdraw", contract transfers USDC winnings proportionally
+    else No Consensus Yet
+        Backend(Nodejs)-->>Admin_UI: Vote recorded, waiting for another admin confirmation
     end
 ```
 
 ---
 
-## 📖 四、 用户操作指南 (Operation Guide)
+## 📖 User Operation Guide
 
-### 👤 普通玩家指南
-1. **连接钱包与激活**：打开平台主页，点击右上角**【连接 Web3Wallet】**。授权后，系统会自动为您在 BSC 链上创建一个专属的免 Gas 交易智能账户。
-2. **划转资金 (充值)**：首次下注前，点击右上角钱包面板的**【充值】**。输入金额，确认后资金将从您的个人 EOA 钱包转移到平台智能账户。
-3. **双向交易体验**：
-   - **买入 (Buy)**：在右侧面板选择看好的队伍，输入 USDC 金额，点击买入，获得对应数量的"份额 (Shares)"。
-   - **提前平仓 (Cash Out)**：若比赛期间赔率对您有利，可打开右上角**【资产组合】**，在"投注记录"中点击 `[Cash Out]`。系统将按当前的实时市价回收您的份额，并立即退还 USDC。
-4. **赛后提现**：比赛结束并经 DAO 裁决后，若您持有获胜方的份额，请进入【资产组合】点击**【提现】**。赢取的本金与利润将自动转入您的智能账户，并伴有撒花庆祝特效。
+### 👤 Regular User Guide
+1. **Connect Wallet & Activate**: Open the main page, click **[Connect Web3Wallet]** in the top right. After authorization, the system will automatically create a dedicated gasless trading smart account for you on BSC.
+2. **Transfer Funds (Deposit)**: Before your first bet, click **[Deposit]** in the top right wallet panel. Enter the amount and confirm to transfer funds from your personal EOA wallet to the platform smart account.
+3. **Bidirectional Trading**:
+   - **Buy**: Select the team you favor in the right panel, enter USDC amount, click buy to get corresponding number of "Shares".
+   - **Early Cash Out**: If odds are favorable during the match, open **[Portfolio]** in the top right, click `[Cash Out]` in "Bet History". System will repurchase your shares at current real-time market price and immediately return USDC.
+4. **Post-match Withdrawal**: After the match ends and DAO resolves, if you hold shares of the winning side, go to **[Portfolio]** and click **[Withdraw]**. Your principal and profits will be automatically transferred to your smart account with a celebratory confetti effect.
 
-### 🛡️ DAO 管理员指南
-1. **后台登录**：
-   - 访问 `http://[你的域名或IP]:3010/admin.html`。
-   - 点击【连接钱包并验证身份】，并在 MetaMask 中对系统发放的一次性消息 (Nonce) 进行免费的密码学签名。
-2. **多签裁决**：
-   - 登录后，在【待裁决赛事】面板中，您会看到所有 **开赛时间已超过 3 小时** 且尚未结算的比赛。
-   - 根据真实赛果，点击"主队胜"、"客队胜"或"平局"。
-   - 当有两位 DAO 成员对同一比赛投出相同结果时，系统将自动触发智能合约，将该比赛的资金池结算上链。
-3. **DAO 成员管理**：
-   - 切换到【DAO 成员管理】标签页。
-   - 您可以输入其他信任合伙人的 BSC 钱包地址，将其添加为拥有投票权的 DAO 管理员，也可随时移除（超级管理员不可被移除）。
+### 🛡️ DAO Admin Guide
+1. **Admin Login**:
+   - Visit `http://[your-domain-or-IP]:3010/admin.html`.
+   - Click **[Connect Wallet & Verify Identity]**, and sign the one-time message (Nonce) from the system in MetaMask (gas-free).
+2. **Multi-signature Resolution**:
+   - After login, in the **[Pending Resolution Events]** panel, you will see all matches where **match time has exceeded 3 hours** and have not yet been settled.
+   - Based on actual match results, click "Home Wins", "Away Wins", or "Draw".
+   - When two DAO members vote the same result for the same match, the system will automatically trigger the smart contract to settle that match's fund pool on chain.
+3. **DAO Member Management**:
+   - Switch to the **[DAO Member Management]** tab.
+   - You can enter other trusted partner's BSC wallet address to add them as a DAO admin with voting rights, or remove them at any time (super admin cannot be removed).
