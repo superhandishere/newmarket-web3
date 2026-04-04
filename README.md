@@ -28,7 +28,7 @@
 
 ### 6. 智能多语言 (i18n Auto-detection)
 - 通过 IP Geolocation 与 Browser Headers 自动识别用户所属地。
-- 原生支持 English、中文 (zh)、ລາວ (老挝语 lo)，支持 UI 与底层数据的无缝热切换。
+- 原生支持 English、中文 (zh)、ລາ​ວ (老挝语 lo)，支持 UI 与底层数据的无缝热切换。
 
 ---
 
@@ -73,18 +73,18 @@
 sequenceDiagram
     participant User
     participant Frontend
-    participant Bundler(Pimlico)
+    participant Bundler as Bundler(Pimlico)
     participant BSC_Contract
-    participant Backend(Node+Mongo)
+    participant Backend as Backend(Node+Mongo)
     participant All_Clients
     
     User->>Frontend: 选择买入/卖出，点击确认
-    Frontend->>Bundler(Pimlico): 构造 UserOperation (打包 Approve + Bet)
-    Bundler(Pimlico)->>BSC_Contract: 代付 Gas 并将交易上链执行
+    Frontend->>Bundler: 构造 UserOperation (打包 Approve + Bet)
+    Bundler->>BSC_Contract: 代付 Gas 并将交易上链执行
     BSC_Contract-->>Frontend: 返回 txHash
-    Frontend->>Backend(Node+Mongo): POST /api/save-order 上报订单
-    Backend(Node+Mongo)->>Backend(Node+Mongo): MongoDB $inc O(1) 原子更新资金池
-    Backend(Node+Mongo)->>All_Clients: WebSocket 广播最新赔率 (odds_updated)
+    Frontend->>Backend: POST /api/save-order 上报订单
+    Backend->>Backend: MongoDB $inc O(1) 原子更新资金池
+    Backend->>All_Clients: WebSocket 广播最新赔率 (odds_updated)
     All_Clients->>All_Clients: UI 热重载：图表跳动、面板赔率更新
 ```
 
