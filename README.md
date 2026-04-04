@@ -1,73 +1,73 @@
-# ⚽ GlobalCup 2026 - Web3 Prediction Market Trading Terminal
+# ⚽ GlobalCup 2026 - Web3 ระบบเทรดตลาดพยากรณ์
 
-> GlobalCup 2026 is a decentralized prediction market DApp built on **BSC (Binance Smart Chain)**. The project leverages **Account Abstraction (ERC-4337) gasless technology**, combining **AMM share trading (Shares AMM)** with **DAO multi-signature resolution**, providing users with a seamless and professional Web3 sports prediction and trading experience.
-
----
-
-## 🌟 Features
-
-### 1. ERC-4337 Gasless Trading
-- Integrated **AppKit**, **Viem**, and **Permissionless.js**, with Pimlico Paymaster sponsoring gas fees.
-- Automatically creates Safe smart accounts for users, executing batch transactions like `Approve` + `Bet` in one click, greatly lowering the Web3 barrier.
-
-### 2. AMM Share-based Bidirectional Trading (Share-based AMM & Cash Out)
-- Abandoning traditional fixed odds, adopting dynamic liquidity pool algorithms.
-- Supports **Buy** and **Sell/Cash Out**. Users can close positions early at any time based on real-time odds to lock in profits or cut losses.
-
-### 3. Real-time Odds Push (Real-time Odds)
-- Combining MongoDB `O(1)` atomic updates with WebSocket (`Socket.io`) millisecond-level broadcast.
-- Any user's bet will instantly trigger dynamic hot-refresh of odds and charts across the entire network.
-
-### 4. Comprehensive Portfolio & Favorites
-- Intuitive "Portfolio" panel showing real-time **Current Value** and **Unrealized PnL** of held shares.
-- Supports one-click event favorites and cross-panel state linkage.
-
-### 5. DAO Multi-signature Secure Resolution (DAO Multi-sig Resolution)
-- Independent `admin.html` resolution console. Based on Web3 wallet Nonce signature authentication.
-- After an event ends, two DAO members must vote consistently, and the backend bot automatically onboards the result to the chain, triggering fund pool settlement, preventing single-point malicious behavior.
-
-### 6. Smart Multi-language (i18n Auto-detection)
-- Automatically identifies user location via IP Geolocation and Browser Headers.
-- Native support for English, 中文 (zh), ລາ​ວ (Lao lo), with seamless hot-switching for both UI and underlying data.
+> GlobalCup 2026 เป็น DApp ตลาดพยากรณ์แบบกระจายศูนย์ที่สร้างบน **BSC (Binance Smart Chain)** โครงการนี้ใช้ **Account Abstraction (ERC-4337) �เทคโนโลยีไร้ Gas**, ผสมผสาน **การเทรดหุ้น AMM (Shares AMM)** กับ **กลไกตัดสินใจ Multi-signature ของ DAO** เพื่อมอบประสบการณ์พยากรณ์และเทรดกีฬา Web3 ที่ราบรื่นและเป็นมืออาชีพ
 
 ---
 
-## 🔌 API Overview
+## 🌟 คุณสมบัติ
 
-Backend built on **Node.js (Express) + MongoDB**.
+### 1. การเทรดแบบไร้ Gas ด้วย ERC-4337 (Gasless Trading)
+- ผสาน **AppKit**, **Viem** และ **Permissionless.js** พร้อม Pimlico Paymaster สนับสนุนค่า Gas
+- สร้าง Safe smart account ให้ผู้ใช้โดยอัตโนมัติ ดำเนินการเทรดแบบ batch เช่น `Approve` + `Bet` ในคลิกเดียว ลดอุปสรรค Web3 อย่างมาก
+
+### 2. การเทรดสองทิศทางแบบ AMM (Share-based AMM & Cash Out)
+- ละทิ้งอัตราต่อรองคงที่แบบดั้งเดิม ใช้อัลกอริทึมกลไกราคาแบบไดนามิก
+- รองรับ **ซื้อ (Buy)** และ **ขาย/ปิดสถานะ (Sell/Cash Out)** ผู้ใช้สามารถปิดสถานะก่อนกำหนดได้ตลอดเวลาตามอัตราต่อรองแบบเรียลไทม์เพื่อล็อกกำไรหรือตัดขาดทุน
+
+### 3. การแสดงราคาอัตราต่อรองแบบเรียลไทม์ (Real-time Odds)
+- ผสาน MongoDB `O(1)` atomic updates กับ WebSocket (`Socket.io`) ประเภท broadcast ระดับมิลลิวินาที
+- การเดิมพันของผู้ใช้ใดๆ จะทำให้อัตราต่อรองและกราฟทั่วทั้งเครือข่าย refresh ทันที
+
+### 4. พอร์ตโฟลิโอและรายการโปรด (Portfolio & Favorites)
+- แผงควบคุม "พอร์ตโฟลิโอ" ที่ใช้งานง่าย แสดง **มูลค่าปัจจุบัน** และ **กำไร/ขาดทุนที่ยังไม่รับรู้ (Unrealized PnL)** ของหุ้นที่ถืออยู่แบบเรียลไทม์
+- รองรับการเพิ่มการแข่งขันลงรายการโปรดด้วยคลิกเดียวและการเชื่อมต่อสถานะข้ามแผงควบคุม
+
+### 5. กลไกตัดสินใจแบบ Multi-signature ของ DAO (DAO Multi-sig Resolution)
+- คอนโซลตัดสินใจ `admin.html` แยกต่างหาก อิงจากการยืนยันลายเซ็น Nonce ของ Web3 wallet
+- หลังจากการแข่งขันสิ้นสุด ต้องมีสมาชิก DAO สองคนลงคะแนนตรงกัน และ bot แบ็กเอนด์จะอัปโหลดผลลัพธ์ไปยัง chain โดยอัตโนมัติ ทริกเกอร์การชำระกองทุน ป้องกันพฤติกรรมไม่ซื่อสัตย์จุดเดียว
+
+### 6. หลายภาษาอัจฉริยะ (i18n Auto-detection)
+- ระบุตำแหน่งผู้ใช้อัตโนมัติผ่าน IP Geolocation และ Browser Headers
+- รองรับ English, 中文 (zh), ລາ​ວ (lo), และ **ภาษาไทย (th)** โดยกำเนิด พร้อมสลับภาษาทั้ง UI และข้อมูลพื้นฐานได้อย่างราบรื่น
+
+---
+
+## 🔌 ภาพรวม API
+
+แบ็กเอนด์สร้างบน **Node.js (Express) + MongoDB**
 
 ### 1. Public API
-| Endpoint | Method | Description |
+| Endpoint | Method | คำอธิบาย |
 | :--- | :--- | :--- |
-| `/api/events` | `GET` | Get all event basic info stored in the database. |
-| `/api/win-rates` | `GET` | Get current total liquidity pool and dynamic win rates (odds) for all events. |
-| `/api/trades/:id` | `GET` | Get all historical trade records for a specified event (eventId). |
-| `/api/locale` | `GET` | Fallback language detection - returns recommended language by parsing `Accept-Language` header. |
+| `/api/events` | `GET` | ดึงข้อมูลพื้นฐานการแข่งขันทั้งหมดที่เก็บในฐานข้อมูล |
+| `/api/win-rates` | `GET` | ดึงยอดกองทุนและอัตราการชนะแบบไดนามิก (odds) ของการแข่งขันทั้งหมด |
+| `/api/trades/:id` | `GET` | ดึงบันทึกการเทรดทั้งหมดสำหรับการแข่งขันที่ระบุ (eventId) |
+| `/api/locale` | `GET` | ตรวจจับภาษาสำรอง - ส่งคืนภาษาแนะนำโดยแปลงส่วนหัว `Accept-Language` |
 
 ### 2. Trading & User API
-| Endpoint | Method | Description |
+| Endpoint | Method | คำอธิบาย |
 | :--- | :--- | :--- |
-| `/api/save-order` | `POST` | Receive bet/close data from frontend, atomically update (`$inc`) liquidity pool, trigger WS broadcast. |
-| `/api/user-portfolio` | `GET` | Pass `address` to return complete bet history, position market value, and total PnL for that smart account. |
-| `/api/user-payouts` | `GET` | Pass `address` to return list of winning orders that can be withdrawn. |
-| `/api/pimlico/56` | `POST` | Proxy forwarding Bundler/Paymaster requests, hiding API Key. |
+| `/api/save-order` | `POST` | รับข้อมูลเดิมพัน/ปิดสถานะจาก frontend อัปเดตกองทุนแบบ atomic (`$inc`) ทริกเกอร์ WS broadcast |
+| `/api/user-portfolio` | `GET` | ส่ง `address` เพื่อดึงประวัติการเดิมพัน มูลค่าตำแหน่ง และ PnL ทั้งหมดของ smart account นั้น |
+| `/api/user-payouts` | `GET` | ส่ง `address` เพื่อดึงรายการคำสั่งที่ชนะและสามารถถอนได้ |
+| `/api/pimlico/56` | `POST` | ส่งต่อคำขอ Bundler/Paymaster เพื่อซ่อน API Key |
 
 ### 3. DAO Admin API
-> **Note:** All endpoints below require `verifyDaoAuth` middleware, verifying `x-wallet-address`, `x-signature`, `x-nonce`, `x-timestamp` in headers.
+> **หมายเหตุ:** endpoints ทั้งหมดด้านล่างต้องผ่าน middleware `verifyDaoAuth` ตรวจสอบ `x-wallet-address`, `x-signature`, `x-nonce`, `x-timestamp` ในส่วนหัว
 
-| Endpoint | Method | Description |
+| Endpoint | Method | คำอธิบาย |
 | :--- | :--- | :--- |
-| `/api/admin/auth-nonce` | `GET` | Pre-login endpoint generating replay-protected one-time signature message (Nonce). |
-| `/api/admin/resolve-event`| `POST` | Submit resolution vote. When two votes match, backend automatically calls smart contract `resolveEvent` for on-chain settlement. |
-| `/api/admin/dao-members` | `GET` | Get all DAO members in current whitelist. |
-| `/api/admin/dao-members` | `POST` | Add new DAO member BSC wallet address. |
-| `/api/admin/dao-members/:address`| `DELETE`| Remove specified DAO member permission (super admin and self cannot be removed). |
+| `/api/admin/auth-nonce` | `GET` | endpoint pre-login สร้างข้อความลายเซ็นครั้งเดียวป้องกัน replay (Nonce) |
+| `/api/admin/resolve-event`| `POST` | ส่งคะแนนการตัดสิน เมื่อสองคะแนนตรงกัน แบ็กเอนด์จะเรียก smart contract `resolveEvent` ชำระบน chain โดยอัตโนมัติ |
+| `/api/admin/dao-members` | `GET` | ดึงรายชื่อสมาชิก DAO ทั้งหมดใน whitelist ปัจจุบัน |
+| `/api/admin/dao-members` | `POST` | เพิ่มที่อยู่ BSC wallet ของสมาชิก DAO ใหม่ |
+| `/api/admin/dao-members/:address`| `DELETE`| ลบสิทธิ์สมาชิก DAO ที่ระบุ (super admin และตัวเองไม่สามารถลบได้) |
 
 ---
 
-## 🔄 Workflow Diagrams
+## 🔄 แผนภาพ Workflow
 
-### 1. Core Trading & Real-time Odds Update Flow (User Trading Flow)
+### 1. การเทรดหลักและ Flow อัปเดตอัตราต่อรองแบบเรียลไทม์ (User Trading Flow)
 
 ```mermaid
 sequenceDiagram
@@ -78,14 +78,14 @@ sequenceDiagram
     participant Backend as Backend(Node+Mongo)
     participant All_Clients
     
-    User->>Frontend: Select Buy/Sell, click confirm
-    Frontend->>Bundler: Construct UserOperation (bundle Approve + Bet)
-    Bundler->>BSC_Contract: Sponsor gas and execute transaction on chain
-    BSC_Contract-->>Frontend: Return txHash
-    Frontend->>Backend: POST /api/save-order report order
-    Backend->>Backend: MongoDB $inc O(1) atomic update liquidity pool
-    Backend->>All_Clients: WebSocket broadcast latest odds (odds_updated)
-    All_Clients->>All_Clients: UI hot-reload: charts jump, panel odds update
+    User->>Frontend: เลือกซื้อ/ขาย คลิกยืนยัน
+    Frontend->>Bundler: สร้าง UserOperation (bundle Approve + Bet)
+    Bundler->>BSC_Contract: สนับสนุน gas และดำเนินการ transaction บน chain
+    BSC_Contract-->>Frontend: ส่งคืน txHash
+    Frontend->>Backend: POST /api/save-order รายงานคำสั่ง
+    Backend->>Backend: MongoDB $inc O(1) อัปเดตกองทุนแบบ atomic
+    Backend->>All_Clients: WebSocket broadcast อัตราต่อรองล่าสุด (odds_updated)
+    All_Clients->>All_Clients: UI hot-reload: กราฟกระเด้ง อัปเดตอัตราต่อรองบนแผง
 ```
 
 ### 2. DAO Multi-signature Resolution & Auto Settlement Flow (DAO Resolution Flow)
@@ -98,41 +98,41 @@ sequenceDiagram
     participant BSC_Contract
     participant Users
     
-    DAO_Admin->>Admin_UI: 3 hours after match, login to admin.html
-    Admin_UI->>Backend(Nodejs): Request Auth-Nonce and sign in
-    DAO_Admin->>Admin_UI: Submit match result (e.g., HOME wins)
+    DAO_Admin->>Admin_UI: 3 ชั่วโมงหลังการแข่ง ล็อกอิน admin.html
+    Admin_UI->>Backend(Nodejs): ขอ Auth-Nonce และลงชื่อเข้าใช้
+    DAO_Admin->>Admin_UI: ส่งผลการแข่ง (เช่น ทีมเหย้าชนะ)
     Admin_UI->>Backend(Nodejs): POST /api/admin/resolve-event
-    Backend(Nodejs)->>Backend(Nodejs): Record vote. Check if 2-vote consensus reached
-    alt Consensus Reached (2 matching votes)
-        Backend(Nodejs)->>BSC_Contract: Node.js machine wallet initiates resolveEvent() transaction
-        BSC_Contract-->>Backend(Nodejs): On-chain fund pool enters Settlement state
-        Backend(Nodejs)->>Users: Status update, frontend portfolio shows "Withdraw" button
-        Users->>BSC_Contract: Click "Withdraw", contract transfers USDC winnings proportionally
-    else No Consensus Yet
-        Backend(Nodejs)-->>Admin_UI: Vote recorded, waiting for another admin confirmation
+    Backend(Nodejs)->>Backend(Nodejs): บันทึกคะแนน ตรวจสอบว่าถึง 2 คะแนนที่ตรงกันหรือไม่
+    alt ถึงความยินยอม (2 คะแนนตรงกัน)
+        Backend(Nodejs)->>BSC_Contract: Node.js machine wallet เริ่ม transaction resolveEvent()
+        BSC_Contract-->>Backend(Nodejs): กองทุนบน chain เข้าสู่สถานะ Settlement
+        Backend(Nodejs)->>Users: อัปเดตสถานะ พอร์ตโฟลิโอแสดงปุ่ม "ถอน"
+        Users->>BSC_Contract: คลิก "ถอน" contract โอน USDC ให้ตามสัดส่วน
+    else ยังไม่ถึงความยินยอม
+        Backend(Nodejs)-->>Admin_UI: บันทึกสำเร็จ รอการยืนยันจาก admin อีกคน
     end
 ```
 
 ---
 
-## 📖 User Operation Guide
+## 📖 คู่มือการใช้งาน
 
-### 👤 Regular User Guide
-1. **Connect Wallet & Activate**: Open the main page, click **[Connect Web3Wallet]** in the top right. After authorization, the system will automatically create a dedicated gasless trading smart account for you on BSC.
-2. **Transfer Funds (Deposit)**: Before your first bet, click **[Deposit]** in the top right wallet panel. Enter the amount and confirm to transfer funds from your personal EOA wallet to the platform smart account.
-3. **Bidirectional Trading**:
-   - **Buy**: Select the team you favor in the right panel, enter USDC amount, click buy to get corresponding number of "Shares".
-   - **Early Cash Out**: If odds are favorable during the match, open **[Portfolio]** in the top right, click `[Cash Out]` in "Bet History". System will repurchase your shares at current real-time market price and immediately return USDC.
-4. **Post-match Withdrawal**: After the match ends and DAO resolves, if you hold shares of the winning side, go to **[Portfolio]** and click **[Withdraw]**. Your principal and profits will be automatically transferred to your smart account with a celebratory confetti effect.
+### 👤 คู่มือผู้ใช้ทั่วไป
+1. **เชื่อมต่อ Wallet & ยืนยันตัวตน**: เปิดหน้าหลัก คลิก **[เชื่อมต่อ Web3Wallet]** มุมขวาบน หลังยืนยัน ระบบจะสร้าง smart account สำหรับเทรดแบบไร้ gas บน BSC ให้โดยอัตโนมัติ
+2. **โอนเงิน (ฝาก)**: ก่อนเดิมพันครั้งแรก คลิก **[ฝากเงิน]** ที่แผง wallet มุมขวาบน ใส่จำนวนและยืนยันเพื่อโอนเงินจาก EOA wallet ส่วนตัวไปยัง smart account ของแพลตฟอร์ม
+3. **การเทรดสองทิศทาง**:
+   - **ซื้อ (Buy)**: เลือกทีมที่ชอบในแผงด้านขวา ใส่จำนวน USDC คลิกซื้อเพื่อรับ "หุ้น" จำนวน相应
+   - **ปิดสถานะก่อนกำหนด (Cash Out)**: หากอัตราต่อรองเป็นใจ คลิก **[พอร์ตโฟลิโอ]** มุมขวาบน คลิก `[Cash Out]` ใน "ประวัติการเดิมพัน" ระบบจะซื้อคืนหุ้นของคุณในราคาตลาดแบบเรียลไทม์และส่งคืน USDC ทันที
+4. **ถอนหลังการแข่ง**: หลังการแข่งสิ้นสุดและ DAO ตัดสิน หากคุณถือหุ้นฝ่ายชนะ ไปที่ **[พอร์ตโฟลิโอ]** และคลิก **[ถอน]** เงินต้นและกำไรจะโอนไปยัง smart account ของคุณโดยอัตโนมัติพร้อมเอฟเฟกต์เฉลิมฉลอง
 
-### 🛡️ DAO Admin Guide
-1. **Admin Login**:
-   - Visit `http://[your-domain-or-IP]:3010/admin.html`.
-   - Click **[Connect Wallet & Verify Identity]**, and sign the one-time message (Nonce) from the system in MetaMask (gas-free).
-2. **Multi-signature Resolution**:
-   - After login, in the **[Pending Resolution Events]** panel, you will see all matches where **match time has exceeded 3 hours** and have not yet been settled.
-   - Based on actual match results, click "Home Wins", "Away Wins", or "Draw".
-   - When two DAO members vote the same result for the same match, the system will automatically trigger the smart contract to settle that match's fund pool on chain.
-3. **DAO Member Management**:
-   - Switch to the **[DAO Member Management]** tab.
-   - You can enter other trusted partner's BSC wallet address to add them as a DAO admin with voting rights, or remove them at any time (super admin cannot be removed).
+### 🛡️ คู่มือ DAO Admin
+1. **เข้าสู่ระบบ Admin**:
+   - เยี่ยมชม `http://[โดเมนหรือIPของคุณ]:3010/admin.html`
+   - คลิก **[เชื่อมต่อ Wallet & ยืนยันตัวตน]** และลงนามข้อความครั้งเดียว (Nonce) จากระบบใน MetaMask (ไม่มีค่า gas)
+2. **การตัดสินใจ Multi-signature**:
+   - หลังเข้าสู่ระบบ ในแผง **[การแข่งขันที่รอการตัดสิน]** คุณจะเห็นการแข่งขันทั้งหมดที่ **เวลาแข่งผ่านไป 3 ชั่วโมง** และยังไม่ได้ชำระ
+   - ตามผลการแข่งขันจริง คลิก "ทีมเหย้าชนะ", "ทีมเยือนชนะ", หรือ "เสมอ"
+   - เมื่อสมาชิก DAO สองคนลงคะแนนผลเดียวกันสำหรับการแข่งขันเดียวกัน ระบบจะทริกเกอร์ smart contract เพื่อชำระกองทุนการแข่งขันบน chain โดยอัตโนมัติ
+3. **การจัดการสมาชิก DAO**:
+   - สลับไปที่แท็บ **[การจัดการสมาชิก DAO]**
+   - คุณสามารถใส่ที่อยู่ BSC wallet ของพันธมิตรที่เชื่อถือได้คนอื่นเพื่อเพิ่มเป็น DAO admin ที่มีสิทธิ์ลงคะแนน หรือลบได้ตลอดเวลา (super admin ไม่สามารถลบได้)
