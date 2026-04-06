@@ -136,3 +136,10 @@ sequenceDiagram
 3. **การจัดการสมาชิก DAO**:
    - สลับไปที่แท็บ **[การจัดการสมาชิก DAO]**
    - คุณสามารถใส่ที่อยู่ BSC wallet ของพันธมิตรที่เชื่อถือได้คนอื่นเพื่อเพิ่มเป็น DAO admin ที่มีสิทธิ์ลงคะแนน หรือลบได้ตลอดเวลา (super admin ไม่สามารถลบได้)
+
+---
+
+## 📋 Changelog
+
+See [CHANGELOG.md](./CHANGELOG.md) for the full version history.
+
