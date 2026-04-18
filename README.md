@@ -1,6 +1,6 @@
 # ⚽ GlobalCup 2026
 
-[English](./README_en) · [中文](./README_zh) · [ภาษาไทย](./README_th)
+[English](./README_en.md) · [中文](./README_zh.md) · [ภาษาไทย](./README_th.md)
 
 ---
 
@@ -8,9 +8,9 @@
 
 | Language | Description |
 | :--- | :--- |
-| [English](./README_en) | Full documentation in English |
-| [中文](./README_zh) | 完整中文文档 |
-| [ภาษาไทย](./README_th) | เอกสารภาษาไทยแบบเต็ม |
+| [English](./README_en.md) | Full documentation in English |
+| [中文](./README_zh.md) | 完整中文文档 |
+| [ภาษาไทย](./README_th.md) | เอกสารภาษาไทยแบบเต็ม |
 
 ---
 
