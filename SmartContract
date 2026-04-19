@@ -1,1 +1,79 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
 
+interface IERC20 {
+    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
+    function transfer(address recipient, uint256 amount) external returns (bool);
+    function balanceOf(address account) external view returns (uint256);
+}
+
+contract GlobalCup2026 {
+    address public admin;
+    IERC20 public usdc;
+
+    mapping(string => string) public eventResults;
+    mapping(string => bool) public isEventResolved;
+
+    event BetPlaced(string eventId, address indexed user, string side, uint256 amount);
+    event SharesSold(string eventId, address indexed user, string side, uint256 shares);
+    event EventResolved(string eventId, string resultSide);
+    event Claimed(string eventId, address indexed user);
+
+    constructor(address _usdcAddress) {
+        admin = msg.sender;
+        usdc = IERC20(_usdcAddress);
+    }
+
+  
+    modifier onlyAdmin() {
+        require(msg.sender == admin, "Not authorized: Admin only");
+        _;
+    }
+
+
+    function bet(string memory eventId, string memory side, uint256 amount) external {
+        require(!isEventResolved[eventId], "Event already resolved");
+        require(amount > 0, "Amount must be > 0");
+
+        require(usdc.transferFrom(msg.sender, address(this), amount), "USDC transfer failed");
+
+    
+        emit BetPlaced(eventId, msg.sender, side, amount);
+    }
+
+    function sell(string memory eventId, string memory side, uint256 shares) external {
+        require(!isEventResolved[eventId], "Event already resolved");
+        require(shares > 0, "Shares must be > 0");
+
+        emit SharesSold(eventId, msg.sender, side, shares);
+    }
+
+    function resolveEvent(string memory eventId, string memory resultSide) external onlyAdmin {
+        require(!isEventResolved[eventId], "Already resolved");
+        isEventResolved[eventId] = true;
+        eventResults[eventId] = resultSide;
+
+        emit EventResolved(eventId, resultSide);
+    }
+
+    function claim(string memory eventId) external {
+        require(isEventResolved[eventId], "Event not resolved yet");
+        
+        emit Claimed(eventId, msg.sender);
+    }
+
+    // ==========================================
+    
+    function payout(address user, uint256 amount) external onlyAdmin {
+        require(usdc.transfer(user, amount), "Payout transfer failed");
+    }
+    
+    
+    function withdrawTreasury(uint256 amount) external onlyAdmin {
+        require(usdc.transfer(admin, amount), "Treasury withdraw failed");
+    }
+
+    function transferAdmin(address newAdmin) external onlyAdmin {
+        admin = newAdmin;
+    }
+}
